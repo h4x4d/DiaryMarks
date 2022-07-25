@@ -8,6 +8,7 @@ from .list_of_subjects import bot_list_of_subjects, bot_list_of_subjects_inline
 from .subject import bot_subject, bot_edit_subject, bot_delete_subject, bot_save_subject
 from .settings import bot_settings, bot_settings_inline, bot_settings_delete, bot_settings_token, bot_mos_ru_token
 from .bot_stub import bot_stub
+from .inline_subject import inline_subject
 
 from filters import ActionFilter
 
@@ -34,3 +35,5 @@ def setup(dp: Dispatcher):
     dp.register_callback_query_handler(bot_save_subject, Text(startswith="subject_save"))
     dp.register_callback_query_handler(bot_list_of_subjects_inline, Text(startswith="list_of_subjects"))
     dp.register_callback_query_handler(bot_start_inline, Text("MAIN"))
+
+    dp.register_inline_handler(inline_subject)
