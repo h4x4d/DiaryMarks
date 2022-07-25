@@ -1,4 +1,5 @@
 import hashlib
+import random
 
 from aiogram.types import InlineQuery, InlineQueryResultArticle, InputTextMessageContent
 from data import create_session, User, Subject
@@ -10,6 +11,16 @@ async def inline_subject(inline_query: InlineQuery):
 
     session = create_session()
     user: User = session.query(User).get(inline_query.from_user.id)
+
+    if not user:
+        ans = InlineQueryResultArticle(
+            id=str(random.getrandbits(64)),
+            title='Кажется, вы не зарегистрированы',
+            input_message_content=InputTextMessageContent(f'Бот: @DiaryMarks_robot', parse_mode="HTML"),
+            description=f'Бот: @DiaryMarks_robot'
+        )
+        await inline_query.answer([ans], cache_time=1)
+        return
 
     subjects: list[Subject] = user.subjects
 
@@ -36,8 +47,18 @@ async def inline_subject(inline_query: InlineQuery):
                 input_message_content=InputTextMessageContent(f'Предмет: <i>{subject.name}</i>\n\n'
                                                               f'Оценки:\n'
                                                               f'{"Нет" if not marks else formatted_marks}\n\n'
-                                                              f'Средняя: <b>{sr}</b>', parse_mode="HTML")
+                                                              f'Средняя: <b>{sr}</b>', parse_mode="HTML"),
+                description=f'Средняя: {sr}'
             )
             answer.append(ans)
+
+    if not answer:
+        ans = InlineQueryResultArticle(
+            id=str(random.getrandbits(64)),
+            title='Ничего не найдено',
+            input_message_content=InputTextMessageContent(f'Бот: @DiaryMarks_robot', parse_mode="HTML"),
+            description=f'Нажав сюда вы сгенерируете мини-рекламу:)'
+        )
+        answer.append(ans)
 
     await inline_query.answer(answer, cache_time=1)
