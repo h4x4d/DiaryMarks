@@ -7,4 +7,7 @@ settings_keyboard.row(
 settings_keyboard.row(
     InlineKeyboardButton("⚠ Скопировать оценки из журнала", callback_data="parse_marks_from_token")
 )
+settings_keyboard.row(
+    InlineKeyboardButton("Репозиторий на GitHub", "https://github.com/h4x4d/DiaryMarks")
+)
 settings_keyboard.row(InlineKeyboardButton("⬅️️ Назад", callback_data="MAIN"))
