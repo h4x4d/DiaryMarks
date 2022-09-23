@@ -10,9 +10,9 @@ from actions import actions
 async def bot_start(msg: types.Message):
     session = create_session()
 
-    if not session.query(User).get(msg.from_id):
+    if not session.query(User).get(msg.from_user.id):
         user = User()
-        user.id = msg.from_id
+        user.id = msg.from_user.id
         user.username = msg.from_user.username
 
         session.add(user)

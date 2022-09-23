@@ -8,7 +8,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 async def bot_list_of_subjects(msg: types.Message, user_id=None):
     session = create_session()
 
-    user = session.query(User).get(msg.from_id if not user_id else user_id)
+    user = session.query(User).get(msg.from_user.id if not user_id else user_id)
 
     keyboard = InlineKeyboardMarkup()
     last = None

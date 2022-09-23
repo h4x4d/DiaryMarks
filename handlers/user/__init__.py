@@ -29,7 +29,7 @@ def setup(dp: Dispatcher):
     dp.register_callback_query_handler(bot_edit_subject, Text(startswith="subject_mark"))
     dp.register_callback_query_handler(bot_settings_inline, Text(startswith="settings"))
     dp.register_callback_query_handler(bot_settings_delete, Text(startswith="delete_all_subjects"))
-    # dp.register_callback_query_handler(bot_settings_token, Text(startswith="parse_marks_from_token"))
+    dp.register_callback_query_handler(bot_settings_token, Text(startswith="parse_marks_from_token"))
     dp.register_callback_query_handler(bot_delete_subject, Text(startswith="subject_delete_"))
     dp.register_callback_query_handler(bot_stub, Text(startswith="parse_marks_from_token"))
     dp.register_callback_query_handler(bot_save_subject, Text(startswith="subject_save"))

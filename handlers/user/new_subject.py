@@ -15,7 +15,7 @@ async def bot_new_subject(msg: types.Message, user_id=None):
         await msg.answer(f'Введите название нового предмета:',
                          reply_markup=back_keyboard)
 
-        actions[msg.from_id] = "new_subject"
+        actions[msg.from_user.id] = "new_subject"
     else:
         await msg.edit_text(f'Введите название нового предмета:',
                             reply_markup=back_keyboard)
@@ -28,11 +28,11 @@ async def bot_new_subject_inline(call: types.CallbackQuery):
 
 
 async def bot_new_subject_second(msg: types.Message):
-    del actions[msg.from_id]
+    del actions[msg.from_user.id]
 
     subject = Subject()
     subject.name = msg.text
-    subject.user_id = msg.from_id
+    subject.user_id = msg.from_user.id
 
     session = create_session()
     session.add(subject)
@@ -40,7 +40,7 @@ async def bot_new_subject_second(msg: types.Message):
 
     keyboard = subject_keyboard(subject.id)
 
-    await bot.delete_message(msg.from_id, msg.message_id - 1)
+    await bot.delete_message(msg.from_user.id, msg.message_id - 1)
     await msg.delete()
 
     await msg.answer(f'Предмет: <i>{subject.name}</i>\n\n'

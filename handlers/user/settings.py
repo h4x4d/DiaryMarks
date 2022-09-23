@@ -66,17 +66,16 @@ async def bot_mos_ru_token(msg: types.Message):
     session = create_session()
 
     for sub in marks:
-        print(sub)
         subject = Subject()
         subject.name = sub
-        subject.user_id = msg.from_id
-        subject.saved_marks = "".join(marks[sub])
+        subject.user_id = msg.from_user.id
+        subject.saved_marks = "".join([str(i) for i in marks[sub]])
 
         session.add(subject)
 
     session.commit()
 
-    await bot.delete_message(msg.from_id, msg.message_id - 1)
+    await bot.delete_message(msg.from_user.id, msg.message_id - 1)
     await msg.delete()
 
     await msg.answer("Парсинг завершен. Проверьте список предметов.")

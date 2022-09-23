@@ -11,7 +11,7 @@ class ActionFilter(BoundFilter):
         self.action = action
 
     async def check(self, obj: Union[Message, CallbackQuery, InlineQuery, Poll]):
-        user_id = obj.from_id
+        user_id = obj.from_user.id
 
         if user_id in actions and actions[user_id].startswith(self.action):
             return True
